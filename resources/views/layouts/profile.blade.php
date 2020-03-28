@@ -39,7 +39,7 @@
                         </ul>
                         <!-- Right Side Of Navbar -->
                         <ul class ="navbar-nav ml auto">
-                            <!-- PHP_12 課題4 -->
+                            <!-- PHP_12 課題1 -->
                             <!-- Authenication Links -->
                             @guest
                             <li class="nav-link" href="{{ route('login')}}">{{__('login')}}</a></li>
