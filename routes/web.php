@@ -15,8 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('news/create', 'Admin\NewsController@add')->middleware('auth');
+    //PHP_13
+    Route::post('news/create', 'Admin\NewsController@create');
 });
 
 //PHP_09
@@ -29,6 +31,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('profile/create', 'Admin\ProfileController@add')->middleware('auth');
     //PHP_12 課題3
     Route::get('profile/edit', 'Admin\ProfileController@edit')->middleware('auth');
+    
+    //PHP_13 課題3
+    Route::post('profile/create', 'Admin\ProfileController@create');
+    //PHP_13 課題6
+    Route::post('profile/edit', 'Admin\ProfileController@update');
 });
 
 Auth::routes();
