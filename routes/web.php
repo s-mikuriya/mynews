@@ -18,7 +18,13 @@ Route::get('/', function () {
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('news/create', 'Admin\NewsController@add')->middleware('auth');
     //PHP_13
-    Route::post('news/create', 'Admin\NewsController@create');
+    Route::post('news/create', 'Admin\NewsController@create')->middleware('auth');
+    //PHP_15
+    Route::get('news', 'Admin\NewsController@index')->middleware('auth');
+    //PHP_16
+    Route::get('news/edit', 'Admin\NewsController@edit')->middleware('auth');
+    Route::post('news/edit', 'Admin\NewsController@update')->middleware('auth');
+    Route::get('news/delete', 'Admin\NewsController@delete')->middleware('auth');
 });
 
 //PHP_09
@@ -36,8 +42,16 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('profile/create', 'Admin\ProfileController@create');
     //PHP_13 課題6
     Route::post('profile/edit', 'Admin\ProfileController@update');
+    
+    //index
+    Route::get('profile', 'Admin\ProfileController@index')->middleware('auth');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//PHP_18
+Route::get('/', 'NewsController@index');
+
+Route::get('/profile', 'ProfileController@index');
