@@ -8,6 +8,12 @@ use App\Http\Controllers\Controller;
 //PHP_14 課題5 以下でProfile Modelが扱えるようになる
 use App\Profile;
 
+//ProfileHistory Modelの使用を宣言する
+use App\ProfileHistory;
+
+//日付操作ライブラリ Carbon の使用を宣言する
+use Carbon\Carbon;
+
 class ProfileController extends Controller
 {
     public function add()
@@ -71,6 +77,12 @@ class ProfileController extends Controller
         
         //該当するデータを上書きして保存する
         $profile->fill($profile_form)->save();
+        
+        //ProfileHistory Modelにも編集履歴を保存する
+        $profileHistory = new ProfileHistory;
+        $profileHistory->profile_id = $profile->id;
+        $profileHistory->edited_at = Carbon::now();
+        $profileHistory->save();
         
         return redirect('admin/profile');
     }
